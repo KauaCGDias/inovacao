@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz - Inovação e Tecnologia</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+    h1 { text-align: center; }
+    .question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 0 5px #ccc; }
+    .options label { display: block; margin-bottom: 5px; }
+    button { padding: 10px 20px; font-size: 16px; border: none; background: #007bff; color: white; border-radius: 5px; cursor: pointer; }
+    #results { margin-top: 30px; }
+    .correct { color: green; }
+    .wrong { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Quiz - Inovação, Criatividade, Big Data e IoT</h1>
+  <form id="quizForm"></form>
+  <button onclick="verificarRespostas()">Verificar Respostas</button>
+  <div id="results"></div>
+
+  <script>
+    const perguntas = [
+      {
+        texto: "Qual é a importância da criatividade nas empresas?",
+        opcoes: [
+          "Apenas gera ideias que raramente são implementadas",
+          "É dispensável com um bom plano de negócios",
+          "Base para soluções inovadoras por meio de ideias novas e adequadas",
+          "Mantém o padrão de mercado",
+          "Exclusiva de profissionais de design"
+        ],
+        correta: 2
+      },
+      {
+        texto: "Quando uma ideia criativa gera valor prático para a organização, isso é chamado de:",
+        opcoes: [
+          "Plano estratégico",
+          "Invenção",
+          "Metodologia ágil",
+          "Inovação",
+          "Campanha de marketing"
+        ],
+        correta: 3
+      },
+      {
+        texto: "A fase do pensamento criativo conhecida como 'deslocamento' é caracterizada por:",
+        opcoes: [
+          "Finalizar um produto já consolidado no mercado",
+          "Aplicar operações provocativas ao foco definido, gerando rupturas de lógica",
+          "Desenvolver métricas de desempenho",
+          "Estudar apenas soluções aplicadas por outras empresas",
+          "Buscar somente ideias que já deram certo anteriormente"
+        ],
+        correta: 1
+      },
+      {
+        texto: "Qual alternativa apresenta corretamente uma diferença essencial entre invenção e inovação?",
+        opcoes: [
+          "Invenções são sempre mais lucrativas que inovações",
+          "A inovação ocorre antes da invenção",
+          "Invenções têm aplicação social imediata",
+          "A inovação aplica ideias criativas com resultados práticos e benefícios para a sociedade",
+          "Invenções e inovações são termos sinônimos"
+        ],
+        correta: 3
+      },
+      {
+        texto: "Por que a criatividade é considerada uma das competências mais importantes do futuro?",
+        opcoes: [
+          "Substitui conhecimento técnico",
+          "Profissionais criativos são mais obedientes",
+          "Lida com problemas simples e repetitivos",
+          "É fundamental para resolver problemas complexos e adaptar-se a mudanças",
+          "Garante estabilidade em ambientes conservadores"
+        ],
+        correta: 3
+      },
+      {
+        texto: "Qual das características abaixo não faz parte do perfil de um profissional inovador?",
+        opcoes: [
+          "Busca contínua por conhecimento",
+          "Autonomia para experimentar",
+          "Curiosidade semelhante à de uma criança",
+          "Rejeição a trabalhos colaborativos",
+          "Participação em equipes interdepartamentais"
+        ],
+        correta: 3
+      },
+      {
+        texto: "O que faz o Product Champion em um processo de inovação?",
+        opcoes: [
+          "Atua na área jurídica",
+          "Rejeita ideias novas",
+          "Trabalha com relatórios de desempenho",
+          "Lidera ideias, reúne recursos e assume riscos",
+          "Atua como supervisor técnico"
+        ],
+        correta: 3
+      },
+      {
+        texto: "O que caracteriza a inovação incremental?",
+        opcoes: [
+          "Substituição completa de um produto",
+          "Mudança apenas visual",
+          "Pequenas melhorias contínuas",
+          "Criação sem objetivo comercial",
+          "Manutenção total do produto"
+        ],
+        correta: 2
+      },
+      {
+        texto: "Inovação disruptiva refere-se a:",
+        opcoes: [
+          "Práticas sustentáveis",
+          "Reformas em processos internos",
+          "Soluções revolucionárias que criam novos mercados",
+          "Troca de equipamentos antigos",
+          "Adoção de normas internacionais"
+        ],
+        correta: 2
+      },
+      {
+        texto: "No contexto de Big Data, o que significa 'Veracidade'?",
+        opcoes: [
+          "Velocidade de transmissão",
+          "Confiabilidade dos dados",
+          "Variedade de fontes",
+          "Volume de dados",
+          "Valor gerado"
+        ],
+        correta: 1
+      },
+      {
+        texto: "A aplicação da Internet das Coisas (IoT) é melhor representada por:",
+        opcoes: [
+          "Redes sociais",
+          "Controle de TVs",
+          "Conexão de objetos físicos à internet",
+          "Sistemas operacionais",
+          "Aplicativos móveis"
+        ],
+        correta: 2
+      },
+      {
+        texto: "Um sistema de 'Cidades Inteligentes' baseado em IoT busca:",
+        opcoes: [
+          "Popularizar redes sociais",
+          "Eliminar servidores físicos",
+          "Conectar infraestrutura urbana para melhorar serviços públicos",
+          "Reduzir sensores em áreas públicas",
+          "Substituir sistemas bancários"
+        ],
+        correta: 2
+      },
+      {
+        texto: "Qual das alternativas representa uma tecnologia associada ao Big Data?",
+        opcoes: [
+          "Paint",
+          "Word",
+          "Hadoop",
+          "PowerPoint",
+          "Windows Media Player"
+        ],
+        correta: 2
+      },
+      {
+        texto: "A análise preditiva em Big Data tem como função:",
+        opcoes: [
+          "Organizar planilhas",
+          "Prever resultados com base em padrões passados",
+          "Criar interfaces visuais",
+          "Determinar preços de venda",
+          "Controlar estoques"
+        ],
+        correta: 1
+      },
+      {
+        texto: "Quando uma organização modifica o processo produtivo sem alterar o produto final, temos:",
+        opcoes: [
+          "Inovação de produto",
+          "Inovação de marketing",
+          "Inovação organizacional",
+          "Inovação de processo",
+          "Inovação disruptiva"
+        ],
+        correta: 3
+      },
+      {
+        texto: "O uso de celebridades como influenciadores em campanhas é exemplo de inovação em:",
+        opcoes: [
+          "Produto",
+          "Processo",
+          "Marketing",
+          "Design",
+          "Operacional"
+        ],
+        correta: 2
+      },
+      {
+        texto: "A fórmula da inovação apresentada no material inclui:",
+        opcoes: [
+          "Planejamento, vendas e lucro",
+          "Ideia, implementação e resultados",
+          "Comunicação, investimento e lançamento",
+          "Recrutamento, análise e execução",
+          "Pesquisa, opinião e propaganda"
+        ],
+        correta: 1
+      },
+      {
+        texto: "O 'perfil conectivo' de um profissional inovador envolve:",
+        opcoes: [
+          "Seguir métodos tradicionais",
+          "Evitar riscos",
+          "Perceber conexões e criar soluções novas",
+          "Repetir rotinas",
+          "Focar apenas em sua área"
+        ],
+        correta: 2
+      },
+      {
+        texto: "A arquitetura da inovação depende principalmente de:",
+        opcoes: [
+          "Normas ISO",
+          "Cultura organizacional e ambiente externo",
+          "Lucro trimestral",
+          "Tamanho da sede",
+          "Número de patentes"
+        ],
+        correta: 1
+      },
+      {
+        texto: "Qual é um dos principais desafios para o avanço da IoT?",
+        opcoes: [
+          "Falta de interesse do mercado",
+          "Escassez de dispositivos",
+          "Ausência de padronização e interoperabilidade",
+          "Alto custo de internet",
+          "Limitação geográfica"
+        ],
+        correta: 2
+      }
+    ];
+
+    const form = document.getElementById('quizForm');
+    perguntas.forEach((q, i) => {
+      const div = document.createElement('div');
+      div.className = 'question';
+      div.innerHTML = `<p><strong>${i + 1}. ${q.texto}</strong></p>`;
+      q.opcoes.forEach((op, j) => {
+        div.innerHTML += `
+          <div class="options">
+            <label>
+              <input type="radio" name="q${i}" value="${j}" /> ${op}
+            </label>
+          </div>`;
+      });
+      form.appendChild(div);
+    });
+
+    function verificarRespostas() {
+      const resultados = document.getElementById('results');
+      resultados.innerHTML = '';
+      let acertos = 0;
+
+      perguntas.forEach((q, i) => {
+        const resposta = document.querySelector(`input[name='q${i}']:checked`);
+        const respostaCorreta = q.correta;
+
+        if (resposta) {
+          const valor = parseInt(resposta.value);
+          if (valor === respostaCorreta) {
+            acertos++;
+            resultados.innerHTML += `<p class="correct">Questão ${i + 1}: Correta</p>`;
+          } else {
+            resultados.innerHTML += `<p class="wrong">Questão ${i + 1}: Incorreta (Correta: ${q.opcoes[q.correta]})</p>`;
+          }
+        } else {
+          resultados.innerHTML += `<p class="wrong">Questão ${i + 1}: Não respondida (Correta: ${q.opcoes[q.correta]})</p>`;
+        }
+      });
+
+      resultados.innerHTML = `<h2>Você acertou ${acertos} de ${perguntas.length}</h2>` + resultados.innerHTML;
+    }
+  </script>
+</body>
+</html>
